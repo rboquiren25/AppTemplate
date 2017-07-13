@@ -4,8 +4,6 @@ import { UniversalModule } from 'angular2-universal';
 import { AppComponent } from './components/app/app.component'
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
-import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
-import { CounterComponent } from './components/counter/counter.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 
 @NgModule({
@@ -13,8 +11,6 @@ import { UserFormComponent } from './components/user-form/user-form.component';
     declarations: [
         AppComponent,
         NavMenuComponent,
-        CounterComponent,
-        FetchDataComponent,
         HomeComponent,
         UserFormComponent
     ],
@@ -24,8 +20,6 @@ import { UserFormComponent } from './components/user-form/user-form.component';
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'users/new', component: UserFormComponent},
             { path: 'home', component: HomeComponent },
-            { path: 'counter', component: CounterComponent },
-            { path: 'fetch-data', component: FetchDataComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ]
