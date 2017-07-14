@@ -1,0 +1,12 @@
+
+
+
+<form class="form-signin"  (ngSubmit)="signIn(f.value)">
+  <h3 class="form-signin-heading">Please Login</h3>
+  <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username and/or password.</div>
+  <label for="inputUsername" >Username</label>
+  <input type="input" id="inputUsername" name="username" ngModel class="form-control" placeholder="Username" required autofocus>
+  <label for="inputPassword" >Password</label>
+  <input type="password" id="inputPassword" name="password" ngModel class="form-control" placeholder="Password" required>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+</form>

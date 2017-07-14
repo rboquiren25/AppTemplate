@@ -20,26 +20,33 @@
                         </a>
                     </li>
 
-                     
-                   <li >
-                       <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Users<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li [routerLinkActive]="['link-active']">
-                                <a [routerLink]="['/users']">
-                                    <span class='glyphicon glyphicon-th-list'></span> User List
-                                </a>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrator <b class="caret"></b></a>
+                        <ul class="dropdown-menu multi-level">
+                            <li class="dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <b class="glyphicon glyphicon-user"></b> User</a>
+                                <ul class="dropdown-menu">
+                                    <li [routerLinkActive]="['link-active']"><a [routerLink]="['/users']"> <b class="glyphicon glyphicon-list-alt"></b> List</a></li>
+                                    <li [routerLinkActive]="['link-active']"><a [routerLink]="['/users/new']"> <b class="glyphicon glyphicon-plus"></b> New</a></li>
+                                    
+                                </ul>
                             </li>
-                            <li [routerLinkActive]="['link-active']">
-                                <a [routerLink]="['/users/new']">
-                                    <span class='glyphicon glyphicon-plus'></span> Add User
-                                </a>
+                            <li class="divider"></li>
+                            <li>
+                               <a href="#">Other</a>
                             </li>
-                       </ul>
-                   </li>
+                        </ul>
+                    </li>
+                    
+              
                 
                 
                 </ul>
-                
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a [routerLink]="['/users/auth']"> <b class="glyphicon glyphicon-user"></b>  Login</a>
+                    </li>
+                </ul>
             </div>
            
         </div>

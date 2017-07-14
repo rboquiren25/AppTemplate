@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 
+
 namespace AppTemplate
 {
     public class Startup
@@ -33,8 +34,10 @@ namespace AppTemplate
         {
             services.AddAutoMapper();
             services.AddDbContext<AppTemplateDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
-            // Add framework services.
             services.AddMvc();
+
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +69,8 @@ namespace AppTemplate
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
-            });
+            });           
+
         }
     }
 }
