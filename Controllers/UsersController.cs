@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http.Authentication;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AppTemplate.Controllers
 {
@@ -26,6 +27,7 @@ namespace AppTemplate.Controllers
 
         }
 
+        [Authorize]
         [HttpGet("/api/Users")]
         public async Task<IEnumerable<UserResource>> GetUsers()
         {

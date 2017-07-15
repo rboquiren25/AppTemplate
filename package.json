@@ -16,6 +16,7 @@
     "@angular/platform-server": "^2.4.5",
     "@angular/router": "^3.4.5",
     "@types/node": "^6.0.42",
+    "angular2-jwt": "^0.2.3",
     "angular2-platform-node": "~2.0.11",
     "angular2-template-loader": "^0.6.2",
     "angular2-universal": "^2.1.0-rc.1",
@@ -23,6 +24,7 @@
     "angular2-universal-polyfills": "^2.1.0-rc.1",
     "aspnet-prerendering": "^2.0.0",
     "aspnet-webpack": "^1.0.17",
+    "auth0-lock": "^10.18.0",
     "awesome-typescript-loader": "3.0.0-beta.13 || ^3.0.0",
     "bootstrap": "^3.3.7",
     "css": "^2.2.1",
@@ -43,7 +45,6 @@
     "to-string-loader": "^1.1.5",
     "typescript": "^2.0.3",
     "url-loader": "^0.5.7",
-    "webpack": "^2.2.0",
     "webpack-hot-middleware": "^2.12.2",
     "webpack-merge": "^0.14.1",
     "zone.js": "^0.7.6"
@@ -58,6 +59,7 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
-    "karma-webpack": "^1.8.0"
+    "karma-webpack": "^1.8.0",
+    "webpack": "^2.7.0"
   }
 }
