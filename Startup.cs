@@ -11,12 +11,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using AppTemplate.Middleware;
+using Microsoft.Extensions.Options;
 
 namespace AppTemplate
 {
     public class Startup
     {
+        private static readonly string secretKey = "testKey";
+        private static readonly string issuer = "http:\\localhost:5000";
+        private static readonly string audience = "http:\\localhost:5000";
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -36,7 +43,7 @@ namespace AppTemplate
             services.AddDbContext<AppTemplateDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddMvc();
 
-            
+           
 
         }
 
@@ -46,11 +53,42 @@ namespace AppTemplate
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            var jwtOptions = new TokenProviderOptions
+            {
+                Audience= audience,
+                Issuer = issuer,
+                //SigningCredentials = new SigningCredentials(signingKey,SecurityAlgorithms.HmacSha256)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)), SecurityAlgorithms.HmacSha256)
+            };
+
+            app.UseMiddleware<TokenProvider>(Options.Create(jwtOptions));
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+                ValidateIssuer = true,
+                ValidIssuer = issuer,
+                ValidateAudience = true,
+                ValidAudience = audience,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = false,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters,
+                AuthenticationScheme = "Bearer"
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
-                    HotModuleReplacement = true
+                   HotModuleReplacement = true
                 });
             }
             else

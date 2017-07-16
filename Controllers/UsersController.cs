@@ -27,16 +27,16 @@ namespace AppTemplate.Controllers
 
         }
 
-        [Authorize]
-        [HttpGet("/api/Users")]
+        [Authorize(ActiveAuthenticationSchemes="Bearer")]
+        [HttpPost("/api")]
         public async Task<IEnumerable<UserResource>> GetUsers()
         {
             var users = await context.Users.Include(u => u.Roles).ToListAsync();
             return mapper.Map<List<User>, List<UserResource>>(users);
         }
 
-        [HttpPost("/api/Users/Auth")]
-        public async Task<UserResource> Login(string username, string password)
+        
+        public async Task<bool> Login(string username, string password)
         {
             byte[] salt = new byte[128 / 8];
             
@@ -61,6 +61,7 @@ namespace AppTemplate.Controllers
                 {
                     claims.Add(new Claim(ClaimTypes.Role, r.RoleName, ClaimValueTypes.String, Issuer));
                 }
+                
 
                 var userIdentity = new ClaimsIdentity("SuperSecureLogin");
                 userIdentity.AddClaims(claims);
@@ -74,9 +75,9 @@ namespace AppTemplate.Controllers
                         AllowRefresh = false
                     });
 
-                
+               return true; 
             }
-             return mapper.Map<User, UserResource>(User);
+             return false;
         }
 
     }
