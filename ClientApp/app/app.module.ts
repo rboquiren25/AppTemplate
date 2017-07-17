@@ -8,6 +8,7 @@ import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { UserloginComponent } from './components/userlogin/userlogin.component';   
 
 
 @NgModule({
@@ -18,12 +19,14 @@ import { UserListComponent } from './components/user-list/user-list.component';
         HomeComponent,
         UserFormComponent,
         UserListComponent,
+        UserloginComponent,
         
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: 'user/login', component: UserloginComponent},
             { path: 'users/new', component: UserFormComponent},
             { path: 'users', component: UserListComponent},
             { path: 'home', component: HomeComponent },

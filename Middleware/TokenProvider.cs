@@ -20,7 +20,7 @@ namespace AppTemplate.Middleware
         private readonly RequestDelegate _next;
         private readonly TokenProviderOptions _options;
         //private readonly UserManager<ApplicationUser> _userManager;
-        private readonly AppTemplateDbContext db;
+         private readonly AppTemplateDbContext db;
 
         public TokenProvider(
         RequestDelegate next,
@@ -67,18 +67,23 @@ namespace AppTemplate.Middleware
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, username));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),ClaimValueTypes.Integer64));
+  
+            List<Role> Roles = new List<Role>();
+            Roles = db.Roles.Where(r=>r.UserId.Equals(user.Id)).ToList();
 
-         
-            claims.Add(new Claim(ClaimTypes.Role, "Administrator"));
-                
+            
+            foreach(Role r in Roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, r.RoleName));
+            }
 
             var jwt = new JwtSecurityToken(
                 issuer: _options.Issuer,
                 audience: _options.Audience,
                 claims: claims,
                 notBefore: now,
-                expires: now.Add(_options.Expiration)
-               // signingCredentials: _options.SigningCredentials
+                expires: now.Add(_options.Expiration),
+                signingCredentials: _options.SigningCredentials
              );
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
@@ -108,6 +113,9 @@ namespace AppTemplate.Middleware
 
             User User = new User();
             User = db.Users.Where(u => u.Username.Equals(username) && u.Password.Equals(hashed)).FirstOrDefault();
+            
+            
+                        
 
             if (User != null)
             {
@@ -123,7 +131,7 @@ namespace AppTemplate.Middleware
 
     public class TokenProviderOptions
     {
-        public string Path { get; set; } = "/api";
+        public string Path { get; set; } = "/api/auth/login";
         public string Issuer { get; set; }
         public string Audience { get; set; }
         public TimeSpan Expiration { get; set; } = TimeSpan.FromMinutes(5);

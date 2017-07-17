@@ -27,14 +27,25 @@ namespace AppTemplate.Controllers
 
         }
 
+            
         [Authorize(ActiveAuthenticationSchemes="Bearer")]
-        [HttpPost("/api")]
+        [Authorize(Roles = "Administrator,Staff")]
+        [HttpGet("/api/users")]
         public async Task<IEnumerable<UserResource>> GetUsers()
         {
             var users = await context.Users.Include(u => u.Roles).ToListAsync();
             return mapper.Map<List<User>, List<UserResource>>(users);
+
+            
         }
 
+        [Authorize(ActiveAuthenticationSchemes="Bearer")]
+        [Authorize(Roles = "Staff")]
+        [HttpGet("/api/test")]
+        public string test()
+        {
+            return "Success";
+        }
         
         public async Task<bool> Login(string username, string password)
         {

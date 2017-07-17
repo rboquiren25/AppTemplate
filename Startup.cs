@@ -20,7 +20,7 @@ namespace AppTemplate
 {
     public class Startup
     {
-        private static readonly string secretKey = "testKey";
+        private static readonly string secretKey = "testKey123456789";
         private static readonly string issuer = "http:\\localhost:5000";
         private static readonly string audience = "http:\\localhost:5000";
 
@@ -58,8 +58,7 @@ namespace AppTemplate
             {
                 Audience= audience,
                 Issuer = issuer,
-                //SigningCredentials = new SigningCredentials(signingKey,SecurityAlgorithms.HmacSha256)
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)), SecurityAlgorithms.HmacSha256)
+                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
             };
 
             app.UseMiddleware<TokenProvider>(Options.Create(jwtOptions));

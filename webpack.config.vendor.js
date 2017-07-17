@@ -25,6 +25,7 @@ module.exports = (env) => {
                 '@angular/router',
                 '@angular/platform-server',
                 'angular2-universal',
+                'angular2-jwt',
                 'angular2-universal-polyfills',
                 'bootstrap',
                 'bootstrap/dist/css/bootstrap.css',
