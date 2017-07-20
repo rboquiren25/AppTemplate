@@ -1,19 +1,45 @@
-import { Http } from '@angular/http';
+import { HomeComponent } from './../components/home/home.component';
+import { AppComponent } from './../components/app/app.component';
 import { Injectable } from '@angular/core';
-import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import { Http, RequestOptions, Request, Headers, RequestMethod } from '@angular/http';
 import 'rxjs/add/operator/map';
-
 
 @Injectable()
 export class AuthService {
-  currentUser: any;
-
   constructor(private http: Http) {
-    let token = localStorage.getItem('token');
-    if(token){
-        let jwt = new JwtHelper();
-        this.currentUser = jwt.decodeToken(token);
-    }
-   }
+  }
 
+  login(credentials) { 
+    
+  let myHeaders = new Headers({'Content-Type':'application/x-www-form-urlencoded','Accept':'application/x-www-form-urlencoded',"cache-control": "no-cache"});
+  
+
+  let options = new RequestOptions();
+  options.method= RequestMethod.Post;
+
+  options.headers = myHeaders;
+  
+
+  var x = ' {"username": "rboquiren25", "password": "rboquiren25" }';
+
+
+    return this.http.post('/user/login','username=rboquiren25&password=rboquiren25',options)
+    .map(  res => res.json);
+    
+    
+
+  }
+
+
+
+  
+  logout() { 
+  }
+
+  isLoggedIn() { 
+    return false;
+  }
 }
+
+
+

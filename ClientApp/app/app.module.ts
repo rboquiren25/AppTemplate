@@ -1,14 +1,17 @@
-
+import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
+
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { UniversalModule } from 'angular2-universal';
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './components/app/app.component'
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserListComponent } from './components/user-list/user-list.component';
-import { UserloginComponent } from './components/userlogin/userlogin.component';   
+import { LoginComponent } from './components/login/login.component';  
+
 
 
 @NgModule({
@@ -19,14 +22,15 @@ import { UserloginComponent } from './components/userlogin/userlogin.component';
         HomeComponent,
         UserFormComponent,
         UserListComponent,
-        UserloginComponent,
+        LoginComponent,
         
     ],
     imports: [
-        UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
+        UniversalModule,
+        FormsModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'user/login', component: UserloginComponent},
+            { path: 'user/login', component: LoginComponent},
             { path: 'users/new', component: UserFormComponent},
             { path: 'users', component: UserListComponent},
             { path: 'home', component: HomeComponent },
@@ -34,7 +38,8 @@ import { UserloginComponent } from './components/userlogin/userlogin.component';
         ])
     ],
     providers: [
-        UserService            
+        UserService,
+        AuthService            
     ]
 })
 export class AppModule {

@@ -13,6 +13,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http.Authentication;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace AppTemplate.Controllers
 {
@@ -39,12 +40,12 @@ namespace AppTemplate.Controllers
             
         }
 
-        [Authorize(ActiveAuthenticationSchemes="Bearer")]
-        [Authorize(Roles = "Staff")]
-        [HttpGet("/api/test")]
-        public string test()
+        [HttpPost("/api/test")]
+        public string test([FromBody]UserResource user)
         {
-            return "Success";
+            
+            Console.WriteLine(user.Username);
+            return user.Username;
         }
         
         public async Task<bool> Login(string username, string password)

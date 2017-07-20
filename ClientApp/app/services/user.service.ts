@@ -13,8 +13,8 @@ export class UserService {
       return this.http.get('/api/Users')
         .map(res => res.json());
   }
+      
 
-  
 
   
 }

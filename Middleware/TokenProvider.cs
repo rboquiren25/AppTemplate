@@ -36,10 +36,10 @@ namespace AppTemplate.Middleware
         {
             if(!context.Request.Path.Equals(_options.Path,StringComparison.Ordinal))
             {
-                return _next(context);
+                return NewMethod(context);
             }
 
-            if(!context.Request.Method.Equals("POST") || !context.Request.HasFormContentType){
+            if (!context.Request.Method.Equals("POST") || !context.Request.HasFormContentType){
                 context.Response.StatusCode = 400;
                 return context.Response.WriteAsync("Bad Request");
             }
@@ -48,10 +48,16 @@ namespace AppTemplate.Middleware
 
         }
 
+        private Task NewMethod(HttpContext context)
+        {
+            return _next(context);
+        }
+
         private async Task GenerateToken(HttpContext context)
         {
             var username = context.Request.Form["username"];
             var password = context.Request.Form["password"];
+            
 
             User user = Login(username,password);
 
@@ -131,7 +137,7 @@ namespace AppTemplate.Middleware
 
     public class TokenProviderOptions
     {
-        public string Path { get; set; } = "/api/auth/login";
+        public string Path { get; set; } = "/user/login";
         public string Issuer { get; set; }
         public string Audience { get; set; }
         public TimeSpan Expiration { get; set; } = TimeSpan.FromMinutes(5);
