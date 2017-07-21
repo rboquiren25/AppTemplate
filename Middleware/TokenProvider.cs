@@ -62,8 +62,9 @@ namespace AppTemplate.Middleware
             User user = Login(username,password);
 
             if(user == null){
-                context.Response.StatusCode = 400;
-                await context.Response.WriteAsync("Invalid username or password");
+                
+                context.Response.StatusCode = 200;
+                await context.Response.WriteAsync("{}");
                 return;
             }
 
@@ -96,7 +97,7 @@ namespace AppTemplate.Middleware
 
             var response = new 
             {
-                access_token = encodedJwt,
+                token = encodedJwt,
                 expires_ = (int)_options.Expiration.TotalSeconds
             };
 
@@ -118,11 +119,8 @@ namespace AppTemplate.Middleware
            numBytesRequested: 256 / 8));
 
             User User = new User();
-            User = db.Users.Where(u => u.Username.Equals(username) && u.Password.Equals(hashed)).FirstOrDefault();
-            
-            
-                        
-
+            User = db.Users.Where(u => u.Username.Equals(username) && u.Password.Equals(hashed)).FirstOrDefault();           
+         
             if (User != null)
             {
                return User;

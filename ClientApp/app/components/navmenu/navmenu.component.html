@@ -43,10 +43,13 @@
                 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
+                    <li *ngIf="!authService.isLoggedIn()">
                         <a [routerLink]="['/user/login']"> <b class="glyphicon glyphicon-user"></b>  Login</a>
                     </li>
                     
+                    <li *ngIf="authService.isLoggedIn()" >
+                        <a (click)="authService.logout()" > <b class="glyphicon glyphicon-user"></b>  Logout</a>
+                    </li>
                 </ul>
             </div>
            
