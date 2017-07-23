@@ -30,7 +30,7 @@ namespace AppTemplate.Controllers
 
             
         [Authorize(ActiveAuthenticationSchemes="Bearer")]
-        [Authorize(Roles = "Administrator,Staff")]
+        [Authorize(Roles = "Administrator")]
         [HttpGet("/api/users")]
         public async Task<IEnumerable<UserResource>> GetUsers()
         {

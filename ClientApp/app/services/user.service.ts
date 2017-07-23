@@ -2,11 +2,12 @@ import { AppComponent } from './../components/app/app.component';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import {HttpService} from './http.service';
 
 @Injectable()
 export class UserService {
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpService) { }
 
   getUsers()
   {

@@ -1,3 +1,5 @@
+import { XHRBackend, RequestOptions } from '@angular/http';
+import { HttpService } from './services/http.service';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 
@@ -39,7 +41,14 @@ import { LoginComponent } from './components/login/login.component';
     ],
     providers: [
         UserService,
-        AuthService            
+        AuthService,
+         {
+            provide: HttpService,
+            useFactory: (backend: XHRBackend, options: RequestOptions) => {
+                return new HttpService(backend, options);
+            },
+            deps: [XHRBackend, RequestOptions]
+         }            
     ]
 })
 export class AppModule {
