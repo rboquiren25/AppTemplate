@@ -7,7 +7,7 @@ import {HttpService} from './http.service';
 @Injectable()
 export class UserService {
 
-  constructor(private http: HttpService) { }
+  constructor(private http: Http) { }
 
   getUsers()
   {
@@ -15,9 +15,6 @@ export class UserService {
         .map(res => res.json());
   }
       
-
-
-  
 }
 
 

@@ -1,3 +1,5 @@
+import { AdminAuthGuard } from './services/admin-auth-guard.service';
+import { AuthGuard } from './services/auth-guard.service';
 import { XHRBackend, RequestOptions } from '@angular/http';
 import { HttpService } from './services/http.service';
 import { AuthService } from './services/auth.service';
@@ -34,7 +36,7 @@ import { LoginComponent } from './components/login/login.component';
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'user/login', component: LoginComponent},
             { path: 'users/new', component: UserFormComponent},
-            { path: 'users', component: UserListComponent},
+            { path: 'users', component: UserListComponent,  canActivate: [AuthGuard, AdminAuthGuard]},
             { path: 'home', component: HomeComponent },
             { path: '**', redirectTo: 'home' }
         ])
@@ -42,13 +44,8 @@ import { LoginComponent } from './components/login/login.component';
     providers: [
         UserService,
         AuthService,
-         {
-            provide: HttpService,
-            useFactory: (backend: XHRBackend, options: RequestOptions) => {
-                return new HttpService(backend, options);
-            },
-            deps: [XHRBackend, RequestOptions]
-         }            
+        AuthGuard,
+        AdminAuthGuard
     ]
 })
 export class AppModule {

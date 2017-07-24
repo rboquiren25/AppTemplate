@@ -15,6 +15,12 @@ export class AuthService {
     if (token) {
       let jwt = new JwtHelper();
       this.currentUser = jwt.decodeToken(token);
+      
+
+      this.currentUser.Roles = this.currentUser["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+     
+      
+
     }
   }
 
@@ -56,6 +62,7 @@ export class AuthService {
     let jwt = new JwtHelper();
     let token = localStorage.getItem('token');
     if (!token) return false;
+    
     let expirationDate = jwt.getTokenExpirationDate(token);
     let isExpired = jwt.isTokenExpired(token);
     return !isExpired;

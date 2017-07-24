@@ -74,7 +74,8 @@ namespace AppTemplate.Middleware
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, username));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),ClaimValueTypes.Integer64));
-  
+            
+
             List<Role> Roles = new List<Role>();
             Roles = db.Roles.Where(r=>r.UserId.Equals(user.Id)).ToList();
 
@@ -93,6 +94,8 @@ namespace AppTemplate.Middleware
                 signingCredentials: _options.SigningCredentials
              );
 
+             
+          
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             var response = new 
