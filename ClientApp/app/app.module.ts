@@ -9,6 +9,7 @@ import { UserService } from './services/user.service';
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {ToastyModule} from 'ng2-toasty';
 import { UniversalModule } from 'angular2-universal';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './components/app/app.component'
@@ -34,6 +35,7 @@ import { LoginComponent } from './components/login/login.component';
     imports: [
         UniversalModule,
         FormsModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
+        ToastyModule.forRoot(),
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'user/login', component: LoginComponent},
