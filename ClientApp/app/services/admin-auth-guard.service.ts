@@ -13,12 +13,6 @@ export class AdminAuthGuard extends AuthGuard {
 
   canActivate(){
       var isLoggedIn = super.canActivate();
-      if(isLoggedIn){
-        return true;
-      }
-        return false;
+      return isLoggedIn ? this.authService.isInRole('Administrator') : false;
     }
-      
-  
-
 }

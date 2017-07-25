@@ -1,19 +1,13 @@
-import { AppComponent } from './../components/app/app.component';
+import { DataService } from './data.service';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
 import {HttpService} from './http.service';
 
 @Injectable()
-export class UserService {
+export class UserService extends DataService {
 
-  constructor(private http: Http) { }
-
-  getUsers()
-  {
-      return this.http.get('/api/Users')
-        .map(res => res.json());
-  }
+  constructor(http: HttpService) {
+    super('/api/Users',http);
+   }
       
 }
 

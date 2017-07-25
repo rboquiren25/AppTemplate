@@ -1,3 +1,5 @@
+import { Error400 } from './../../common/app-error400';
+import { AppError } from './../../common/app-error';
 import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -13,12 +15,9 @@ export class UserListComponent implements OnInit {
   constructor(private UserService: UserService) { }
 
   ngOnInit() {
-    this.UserService.getUsers().subscribe(users => {
-      
-      
+    console.log("sdfsaf");
+    this.UserService.getAll().subscribe(users => {
       this.users = users;
-      console.log("Users", this.users);
-      console.log(users.status);
     });
   }
 

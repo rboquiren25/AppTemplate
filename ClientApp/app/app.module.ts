@@ -1,3 +1,5 @@
+import { ErrorHandler } from '@angular/core';
+import { AppErrorHandler } from './common/app-error-handler';
 import { AdminAuthGuard } from './services/admin-auth-guard.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { XHRBackend, RequestOptions } from '@angular/http';
@@ -36,16 +38,18 @@ import { LoginComponent } from './components/login/login.component';
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'user/login', component: LoginComponent},
             { path: 'users/new', component: UserFormComponent},
-            { path: 'users', component: UserListComponent,  canActivate: [AuthGuard, AdminAuthGuard]},
+            { path: 'users', component: UserListComponent,  canActivate: [AdminAuthGuard]},
             { path: 'home', component: HomeComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],
     providers: [
+        HttpService,
         UserService,
         AuthService,
         AuthGuard,
-        AdminAuthGuard
+        AdminAuthGuard,
+        {provide: ErrorHandler, useClass: AppErrorHandler}
     ]
 })
 export class AppModule {

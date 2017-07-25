@@ -5,9 +5,11 @@ import { Http, RequestOptions, Request, Headers, RequestMethod } from '@angular/
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt'; 
 import 'rxjs/add/operator/map';
 
+
 @Injectable()
 export class AuthService {
   currentUser: any;
+  roles: string[] = [];
   
 
   constructor(private http: Http) {
@@ -15,11 +17,7 @@ export class AuthService {
     if (token) {
       let jwt = new JwtHelper();
       this.currentUser = jwt.decodeToken(token);
-      
-
-      this.currentUser.Roles = this.currentUser["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-     
-      
+      this.roles = this.currentUser["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
     }
   }
@@ -55,10 +53,10 @@ export class AuthService {
   logout() { 
     localStorage.removeItem('token');
     this.currentUser = null;
+    this.roles = [];
   }
 
   isLoggedIn() {
-
     let jwt = new JwtHelper();
     let token = localStorage.getItem('token');
     if (!token) return false;
@@ -66,8 +64,12 @@ export class AuthService {
     let expirationDate = jwt.getTokenExpirationDate(token);
     let isExpired = jwt.isTokenExpired(token);
     return !isExpired;
-    
   }
+
+  isInRole(RoleName){
+    return this.roles.indexOf(RoleName) > -1;
+  }
+
 
 }
 
