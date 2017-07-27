@@ -3,7 +3,7 @@ import { Error400 } from './../common/app-error400';
 import { Observable } from 'rxjs/Observable';
 import { AppComponent } from './../components/app/app.component';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions, RequestOptionsArgs } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {HttpService} from './http.service';
 import 'rxjs/add/operator/catch';
@@ -20,6 +20,11 @@ export class DataService {
       return this.http.get(this.url)
         .map(res => res.json())
         .catch(this.handleError);
+  }  
+
+  shouldBeUnique(username)
+  { 
+    return this.http.get(this.url+'/usernamevalidation?username='+username);
   }
 
   private handleError(error: Response){

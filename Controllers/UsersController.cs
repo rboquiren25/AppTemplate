@@ -36,61 +36,31 @@ namespace AppTemplate.Controllers
         {
             var users = await context.Users.Include(u => u.Roles).ToListAsync();
             return mapper.Map<List<User>, List<UserResource>>(users);
-
-            
         }
 
         [HttpPost("/api/test")]
-        public string test([FromBody]UserResource user)
+        public string test()
         {
             
-            Console.WriteLine(user.Username);
-            return user.Username;
+            
+            return "abc";
         }
         
-        public async Task<bool> Login(string username, string password)
+        [HttpPost("/api/users/create")]
+        public IActionResult CreateUser([FromBody]UserResource UserResource)
         {
-            byte[] salt = new byte[128 / 8];
-            
-
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-           password: password,
-           salt: System.Text.Encoding.ASCII.GetBytes(username),
-            prf: KeyDerivationPrf.HMACSHA1,
-           iterationCount: 10000,
-           numBytesRequested: 256 / 8));
-
-            User User = new User();
-            User = context.Users.Where(u => u.Username.Equals(username) && u.Password.Equals(hashed)).FirstOrDefault();
-
-            if (User != null)
-            {
-                const string Issuer = "MySystemCore";
-                var claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.Name, User.Username, ClaimValueTypes.String, Issuer));
-
-                foreach(Role r in User.Roles)
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, r.RoleName, ClaimValueTypes.String, Issuer));
-                }
-                
-
-                var userIdentity = new ClaimsIdentity("SuperSecureLogin");
-                userIdentity.AddClaims(claims);
-                var userPrincipal = new ClaimsPrincipal(userIdentity);
-
-                await HttpContext.Authentication.SignInAsync("SystemCore", userPrincipal,
-                    new AuthenticationProperties
-                    {
-                        ExpiresUtc = DateTime.UtcNow.AddMinutes(240),
-                        IsPersistent = false,
-                        AllowRefresh = false
-                    });
-
-               return true; 
-            }
-             return false;
+            var user = mapper.Map<UserResource, User>(UserResource);
+            return Ok(mapper.Map<User, UserResource>(user));
         }
+
+        [HttpGet("/api/users/usernamevalidation")]
+        public IActionResult UsernameValidation([FromQuery]string username){
+            var users = context.Users.Where(u=>u.Username.Equals(username)).ToList();
+            if(users.Count> 0) return Ok(users);
+
+            return Ok(null);
+        }
+        
 
     }
 }
