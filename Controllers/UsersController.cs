@@ -40,9 +40,7 @@ namespace AppTemplate.Controllers
 
         [HttpPost("/api/test")]
         public string test()
-        {
-            
-            
+        {   
             return "abc";
         }
         
@@ -51,6 +49,7 @@ namespace AppTemplate.Controllers
         {
             var user = mapper.Map<UserResource, User>(UserResource);
             return Ok(mapper.Map<User, UserResource>(user));
+          
         }
 
         [HttpGet("/api/users/usernamevalidation")]
@@ -60,6 +59,8 @@ namespace AppTemplate.Controllers
 
             return Ok(null);
         }
+
+        
         
 
     }

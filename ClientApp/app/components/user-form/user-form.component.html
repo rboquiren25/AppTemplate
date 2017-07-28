@@ -1,45 +1,49 @@
 
 
-<form class="form-newuser form-horizontal" [formGroup]='form'>
+<form class="form-newuser form-horizontal" [formGroup]='user'>
   <h3>
     Create New User
   </h3> 
   <hr>
   <div class="form-group">
-    <label for="inputUsername" class="col-sm-3 control-label" >Username</label>
+    <label for="inputUsername" class="col-sm-2 control-label" >Username</label>
     <div  class="col-sm-5">
       <input type="text" id="inputUsername" formControlName="username"  class="form-control" placeholder="Username" required autofocus>
     </div>  
-    <div class=" col-sm-3 " *ngIf="username.touched && username.invalid">
-      <div *ngIf="username.errors.required">this field is required</div>
-      <div *ngIf="username.errors.minlength">minimum Length 8</div>
-      <div *ngIf="username.errors.shouldBeUnique">{{username}} is already taken</div>
-      <div *ngIf="username.errors.pattern">Alphanumeric only</div>
+    <div class=" col-sm-4 " *ngIf="username.touched && username.invalid">
+      <div class="alert alert-danger" *ngIf="username.errors.required">this field is required</div>
+      <div class="alert alert-danger" *ngIf="username.errors.minlength">minimum Length 8</div>
+      <div class="alert alert-danger" *ngIf="username.errors.shouldBeUnique">{{user.username}} is already taken</div>
+      <div class="alert alert-danger" *ngIf="username.errors.pattern">Alphanumeric only</div>
     </div>
   </div>
   
   <div class="form-group">
-    <label for="inputPassword" class="col-sm-3 control-label" >Password</label>
+    <label for="inputPassword" class="col-sm-2 control-label" >Password</label>
     <div  class="col-sm-5">
       <input type="password" id="inputPassword" formControlName="password"  class="form-control" placeholder="Password" required autofocus>
     </div>  
+    <div class=" col-sm-4 " *ngIf="password.touched && password.invalid">
+      <div class="alert alert-danger" *ngIf="password.errors.required">this field is required</div>
+      <div class="alert alert-danger" *ngIf="password.errors.minlength">minimum Length 8</div>
+      <div class="alert alert-danger" *ngIf="password.errors.pattern">Alphanumeric only</div>
+    </div>
   </div>
+ 
   
   <div class="form-group">
-    <label for="inputPassword2" class="col-sm-3 control-label" >Confirm password</label>
-    <div  class="col-sm-5">
-      <input type="password" id="inputPassword2" formControlName="password2"  class="form-control" placeholder="Password" required autofocus>
-    </div>  
-  </div>
-  
-  <div class="form-group">
-    <label for="inputEmail" class="col-sm-3 control-label" >Email Address</label>
+    <label for="inputEmail" class="col-sm-2 control-label" >Email Address</label>
     <div  class="col-sm-5">
       <input type="email" id="inputEmail" formControlName="email"  class="form-control" placeholder="Email Address" required autofocus>
     </div>  
+     <div class=" col-sm-4 " *ngIf="email.touched && email.invalid">
+      <div class="alert alert-danger" *ngIf="email.errors.required">this field is required</div>
+      <div class="alert alert-danger" *ngIf="email.errors.minlength">minimum Length 8</div>
+      <div class="alert alert-danger" *ngIf="email.errors.pattern">not a valid email add</div>
+    </div>
   </div>
 
-  <p class="text-right">
-    <button class="btn btn-primary" type="submit" >Create</button>
+  <p class="text-right col-sm-3 col-sm-offset-4">
+    <button class="btn btn-primary" type="button" (click)="OnSubmit(user.value)" >Create</button>
       
   </p>

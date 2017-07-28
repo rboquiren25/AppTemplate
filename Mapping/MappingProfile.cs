@@ -9,6 +9,7 @@ namespace AppTemplate.Mapping
         public MappingProfile()
         {
             CreateMap<User, UserResource>();
+            CreateMap<UserResource, User>();
             CreateMap<Role, RoleResource>();
         }
     }

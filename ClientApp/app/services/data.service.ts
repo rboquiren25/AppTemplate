@@ -21,6 +21,13 @@ export class DataService {
         .map(res => res.json())
         .catch(this.handleError);
   }  
+  
+  create(resource){
+    
+    return this.http.post(this.url+'/create',resource)
+        .map(res => res.json())
+        .catch(this.handleError);
+  }
 
   shouldBeUnique(username)
   { 
