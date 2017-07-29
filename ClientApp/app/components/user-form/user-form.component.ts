@@ -22,13 +22,12 @@ export class UserFormComponent {
     username: new FormControl('',[Validators.required, Validators.minLength(8), Validators.pattern('^[a-zA-Z0-9]+$')],this.shouldBeUnique.bind(this)),
     password: new FormControl('',[Validators.required, Validators.minLength(8), Validators.pattern('^[a-zA-Z0-9]+$')]),
     email: new FormControl('',[Validators.required]),
-      Roles: new FormGroup({
-        Rolename : new FormArray([
-          new FormControl()
+        roles: new FormArray([
+          
         ])
-      })
   });
 
+  
 
   get username(){
     return this.user.get('username');
@@ -63,6 +62,9 @@ export class UserFormComponent {
       console.log(newuser);
     });
    }
+
+ 
+
   
 
 }

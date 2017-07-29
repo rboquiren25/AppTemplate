@@ -1,6 +1,6 @@
 
 
-<form class="form-newuser form-horizontal" [formGroup]='user'>
+<form class="form-newuser form-horizontal" [formGroup]="user">
   <h3>
     Create New User
   </h3> 
@@ -13,7 +13,7 @@
     <div class=" col-sm-4 " *ngIf="username.touched && username.invalid">
       <div class="alert alert-danger" *ngIf="username.errors.required">this field is required</div>
       <div class="alert alert-danger" *ngIf="username.errors.minlength">minimum Length 8</div>
-      <div class="alert alert-danger" *ngIf="username.errors.shouldBeUnique">{{user.username}} is already taken</div>
+      <div class="alert alert-danger" *ngIf="username.errors.shouldBeUnique"> is already taken</div>
       <div class="alert alert-danger" *ngIf="username.errors.pattern">Alphanumeric only</div>
     </div>
   </div>
