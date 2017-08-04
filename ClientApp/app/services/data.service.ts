@@ -29,6 +29,13 @@ export class DataService {
         .catch(this.handleError);
   }
 
+  get(id)
+  {
+    return this.http.get(this.url+'/edit?id='+id)
+        .map(res => res.json())
+        .catch(this.handleError);
+  }
+
   shouldBeUnique(username)
   { 
     return this.http.get(this.url+'/usernamevalidation?username='+username);

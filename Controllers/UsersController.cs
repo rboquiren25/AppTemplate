@@ -79,7 +79,16 @@ namespace AppTemplate.Controllers
             return Ok(null);
         }
 
-        
+      //  [Authorize(ActiveAuthenticationSchemes="Bearer")]
+      //  [Authorize(Roles = "Administrator")]
+        [HttpGet("/api/users/edit")]
+        public async Task<UserResource> GetUser(int id)
+        {
+            var user = await db.Users.Where(u => u.Id.Equals(id)).Include(u => u.Roles).SingleOrDefaultAsync();
+            return mapper.Map<User, UserResource>(user);
+            
+        }
+
         
 
     }
