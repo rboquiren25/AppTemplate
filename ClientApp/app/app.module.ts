@@ -16,9 +16,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './components/app/app.component'
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
-import { UserFormComponent } from './components/user-form/user-form.component';
-import { UserListComponent } from './components/user-list/user-list.component';
-import { LoginComponent } from './components/login/login.component';  
+import { UserFormComponent } from './components/user/user-form/user-form.component';
+import { UserListComponent } from './components/user/user-list/user-list.component';
+import { LoginComponent } from './components/login/login.component';
+import { UserEditComponent } from './components/user/user-edit/user-edit.component';  
 
 
 
@@ -31,6 +32,7 @@ import { LoginComponent } from './components/login/login.component';
         UserFormComponent,
         UserListComponent,
         LoginComponent,
+        UserEditComponent,
         
     ],
     imports: [
@@ -41,8 +43,9 @@ import { LoginComponent } from './components/login/login.component';
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'user/login', component: LoginComponent},
-            { path: 'users/new', component: UserFormComponent},
-            { path: 'users', component: UserListComponent,  canActivate: [AdminAuthGuard]},
+            { path: 'users/new', component: UserFormComponent,canActivate: [AdminAuthGuard]},
+             { path: 'users/edit/:id', component: UserEditComponent,canActivate: [AdminAuthGuard]},
+            { path: 'users', component: UserListComponent,canActivate: [AdminAuthGuard]},
             { path: 'home', component: HomeComponent }
         ])
     ],

@@ -19,12 +19,12 @@ namespace AppTemplate.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly AppTemplateDbContext context;
+        private readonly AppTemplateDbContext db;
         private readonly IMapper mapper;
-        public UsersController(AppTemplateDbContext context, IMapper mapper)
+        public UsersController(AppTemplateDbContext db, IMapper mapper)
         {
             this.mapper = mapper;
-            this.context = context;
+            this.db = db;
 
         }
 
@@ -34,7 +34,7 @@ namespace AppTemplate.Controllers
         [HttpGet("/api/users")]
         public async Task<IEnumerable<UserResource>> GetUsers()
         {
-            var users = await context.Users.Include(u => u.Roles).ToListAsync();
+            var users = await db.Users.Include(u => u.Roles).ToListAsync();
             return mapper.Map<List<User>, List<UserResource>>(users);
         }
 
@@ -44,17 +44,36 @@ namespace AppTemplate.Controllers
             return "abc";
         }
         
+        [Authorize(ActiveAuthenticationSchemes="Bearer")]
+        [Authorize(Roles = "Administrator")]
         [HttpPost("/api/users/create")]
         public IActionResult CreateUser([FromBody]UserResource UserResource)
         {
             var user = mapper.Map<UserResource, User>(UserResource);
+            
+            byte[] salt = new byte[128 / 8];
+            using (var rng = RandomNumberGenerator.Create()){
+                 rng.GetBytes(salt);
+            }
+
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: user.Password,
+            salt: System.Text.Encoding.ASCII.GetBytes(user.Username),
+            prf: KeyDerivationPrf.HMACSHA1,
+            iterationCount: 10000,
+            numBytesRequested: 256 / 8));
+            
+            user.Password = hashed;
+            db.Users.Add(user);
+            db.SaveChanges();
             return Ok(mapper.Map<User, UserResource>(user));
-          
         }
+
+        
 
         [HttpGet("/api/users/usernamevalidation")]
         public IActionResult UsernameValidation([FromQuery]string username){
-            var users = context.Users.Where(u=>u.Username.Equals(username)).ToList();
+            var users = db.Users.Where(u=>u.Username.Equals(username)).ToList();
             if(users.Count> 0) return Ok(users);
 
             return Ok(null);

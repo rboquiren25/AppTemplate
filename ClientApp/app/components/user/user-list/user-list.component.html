@@ -1,0 +1,25 @@
+
+<h4>Users</h4>
+
+<table class="table table-hover table-condensed">
+  <thead style="background-color:#c1e1dc;font-weight:bold;">
+    <tr>
+      <td>No.</td>
+      <td>Username</td>
+      <td>Email</td>
+      <td>Roles</td>
+      <td>Password</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let u of users; let n = index">
+      <td>{{n + 1}}.</td>
+      <td> <a [routerLink]="['/users', 'edit', u.id]"> {{u.username}} </a></td>
+      <td>{{u.email}}</td>
+      <td>
+          <span *ngFor="let r of u.roles; let i = index"> {{r.roleName}}<span *ngIf="i < (u.roles.length - 1)">, </span> </span>
+      </td>
+      <td>{{u.password}}</td>
+    </tr>
+  </tbody>  
+</table>
