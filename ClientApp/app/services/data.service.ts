@@ -28,6 +28,13 @@ export class DataService {
         .map(res => res.json())
         .catch(this.handleError);
   }
+  
+  update(resource){
+    
+    return this.http.post(this.url+'/update',resource)
+        .map(res => res.json())
+        .catch(this.handleError);
+  }
 
   get(id)
   {

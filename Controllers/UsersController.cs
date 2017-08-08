@@ -69,7 +69,19 @@ namespace AppTemplate.Controllers
             return Ok(mapper.Map<User, UserResource>(user));
         }
 
-        
+        [Authorize(ActiveAuthenticationSchemes="Bearer")]
+        [Authorize(Roles = "Administrator")]
+        [HttpPost("/api/users/update")]
+        public IActionResult UpdateUser([FromBody]UserResource UserResource)
+        {
+            var user = mapper.Map<UserResource, User>(UserResource);
+
+            foreach(Role r in user.Roles){
+
+            }
+
+            return Ok(mapper.Map<User, UserResource>(user));
+        }
 
         [HttpGet("/api/users/usernamevalidation")]
         public IActionResult UsernameValidation([FromQuery]string username){
@@ -79,8 +91,8 @@ namespace AppTemplate.Controllers
             return Ok(null);
         }
 
-      //  [Authorize(ActiveAuthenticationSchemes="Bearer")]
-      //  [Authorize(Roles = "Administrator")]
+        [Authorize(ActiveAuthenticationSchemes="Bearer")]
+        [Authorize(Roles = "Administrator")]
         [HttpGet("/api/users/edit")]
         public async Task<UserResource> GetUser(int id)
         {

@@ -1,3 +1,43 @@
-<p>
-  user-edit works!
-</p>
+<ng2-toasty [position]="'top-right'"></ng2-toasty>
+
+<form class="form-user form-horizontal">
+  
+  <h3>
+    Edit User
+  </h3>
+ <hr>
+  <div class="form-group">
+    <label  class="col-sm-2 control-label" >Username</label>
+        <label  class="col-sm-5 control-label" style="text-align:left">
+        {{user.username}}
+        </label>  
+  </div>
+
+  <div class="form-group">
+    <label  class="col-sm-2 control-label" >Email</label>
+         <label  class="col-sm-5 control-label" style="text-align:left">
+        {{user.email}}
+        </label>  
+  </div>
+    
+  <div class="form-group">
+      <label class="col-sm-2 control-label" >Roles</label>
+      <div  class="col-sm-5">
+          
+            <div *ngFor="let r of roleList; let i=index" style="padding-left:20px;">
+              <input type="checkbox" [checked]="isRole(r)" (change)="updateRoles($event)"  name="{{r}}" id="{{r}}" > <label for="{{r}}" style="font-weight:normal" > {{r}} </label>
+            </div>  
+          
+      </div>  
+  
+    </div>  
+    
+    <p class="text-right col-sm-3 col-sm-offset-4">
+      <button class="btn btn-primary" type="button" (click)="OnSubmit()" >Update</button>
+      <button class="btn btn-warning" type="button" (click)="OnDelete()" >Delete</button>
+    </p>
+</form>
+
+<div class="col-sm-3 col-sm-offset-4">
+{{userJson}}
+</div>
